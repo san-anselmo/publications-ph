@@ -8,7 +8,8 @@ import cloudflare from '@astrojs/cloudflare';
 import robotsTxt from 'astro-robots-txt';
 
 export default defineConfig({
-  site: 'https://sananselmopress.com',
+  site: 'https://san-anselmo.github.io',
+  base: '/publications-ph',
   adapter: cloudflare(),
   integrations: [
     sitemap(),

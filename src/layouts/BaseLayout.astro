@@ -31,7 +31,7 @@ const {
   <head>
     <meta charset="UTF-8" />
     <ViewTransitions />
-    <script src="/js/theme-init.js?v=2.40.8" is:inline></script>
+    <script src={import.meta.env.BASE_URL + 'js/theme-init.js?v=2.40.8'} is:inline></script>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
@@ -48,7 +48,7 @@ const {
       property="og:image"
       content={ogImage.startsWith('http')
         ? ogImage
-        : 'https://sananselmopress.com' + ogImage}
+        : 'https://san-anselmo.github.io' + import.meta.env.BASE_URL + (ogImage.startsWith('/') ? ogImage.slice(1) : ogImage)}
     />
     <meta property="og:type" content={ogType} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -58,7 +58,7 @@ const {
       name="twitter:image"
       content={ogImage.startsWith('http')
         ? ogImage
-        : 'https://sananselmopress.com' + ogImage}
+        : 'https://san-anselmo.github.io' + import.meta.env.BASE_URL + (ogImage.startsWith('/') ? ogImage.slice(1) : ogImage)}
     />
     <title>{title}</title>
     <link rel="preconnect" href="https://docs.google.com" crossorigin />
@@ -73,13 +73,13 @@ const {
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap"
       rel="stylesheet"
     />
-    {prefetchHrefs.map((href) => <link rel="prefetch" href={href} />)}
-    <link rel="stylesheet" href="/css/styles.css?v=2.40.8" />
-    <link rel="manifest" href="/manifest.json?v=2.40.8" />
-    <script src="/js/error-logger.js" defer is:inline></script>
-    <script src="/data/fallback-data.js?v=2.40.8" defer is:inline></script>
-    {preScripts.map((src) => <script src={src} defer is:inline />)}
-    <script src="/js/components.js?v=2.40.8" defer is:inline></script>
+    {prefetchHrefs.map((href) => <link rel="prefetch" href={href.startsWith('/') ? import.meta.env.BASE_URL + href.slice(1) : href} />)}
+    <link rel="stylesheet" href={import.meta.env.BASE_URL + 'css/styles.css?v=2.40.8'} />
+    <link rel="manifest" href={import.meta.env.BASE_URL + 'manifest.json?v=2.40.8'} />
+    <script src={import.meta.env.BASE_URL + 'js/error-logger.js'} defer is:inline></script>
+    <script src={import.meta.env.BASE_URL + 'data/fallback-data.js?v=2.40.8'} defer is:inline></script>
+    {preScripts.map((src) => <script src={src.startsWith('/') ? import.meta.env.BASE_URL + src.slice(1) : src} defer is:inline />)}
+    <script src={import.meta.env.BASE_URL + 'js/components.js?v=2.40.8'} defer is:inline></script>
     <script is:inline>
       if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
         navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -87,13 +87,13 @@ const {
         });
         window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register('/sw.js?v=2.40.8', { scope: '/' })
+            .register(window.location.pathname.startsWith('/publications-ph/') ? '/publications-ph/sw.js?v=2.40.8' : '/sw.js?v=2.40.8', { scope: window.location.pathname.startsWith('/publications-ph/') ? '/publications-ph/' : '/' })
             .then((reg) => console.log('Service Worker registered', reg))
             .catch((err) => console.error('Service Worker registration failed', err));
         });
       }
     </script>
-    {postScripts.map((src) => <script src={src} defer is:inline />)}
+    {postScripts.map((src) => <script src={src.startsWith('/') ? import.meta.env.BASE_URL + src.slice(1) : src} defer is:inline />)}
   </head>
   <body data-page={dataPage} data-lang={lang}>
     <div id="navContainer"></div>

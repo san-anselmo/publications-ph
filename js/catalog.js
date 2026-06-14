@@ -39,11 +39,11 @@ async function initPagefind() {
   if (pagefind) return pagefind;
   try {
     // Check if pagefind metadata exists before loading to prevent unhandled rejection errors in dev/cached modes
-    const check = await fetch('/pagefind/pagefind-metadata.json', { method: 'HEAD' });
+    const check = await fetch(window.resolveAssetUrl('/pagefind/pagefind-metadata.json'), { method: 'HEAD' });
     if (!check.ok) {
       return null;
     }
-    pagefind = await import('/pagefind/pagefind.js');
+    pagefind = await import(window.resolveAssetUrl('/pagefind/pagefind.js'));
     await pagefind.init();
     return pagefind;
   } catch (err) {
@@ -570,7 +570,7 @@ window.viewBook = function (id) {
   (async function () {
     try {
       const response = await fetch(
-        `/api/inventory?id=${encodeURIComponent(b.id)}`
+        window.resolveAssetUrl(`/api/inventory?id=${encodeURIComponent(b.id)}`)
       );
       if (response.ok) {
         const data = await response.json();

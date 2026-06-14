@@ -1,5 +1,25 @@
 'use strict';
 
+const getBasePrefix = () => {
+  if (window.location.hostname.endsWith('github.io')) {
+    const segment = window.location.pathname.split('/')[1];
+    return segment ? '/' + segment : '';
+  }
+  if (window.location.pathname.startsWith('/publications-ph/')) {
+    return '/publications-ph';
+  }
+  return '';
+};
+const BASE_PREFIX = getBasePrefix();
+
+window.resolveAssetUrl = function (path) {
+  if (!path) return '';
+  if (path.startsWith('/') && !path.startsWith('//') && !path.startsWith(BASE_PREFIX + '/')) {
+    return BASE_PREFIX + path;
+  }
+  return path;
+};
+
 /* ── DOM & URL Sanitization Utilities (XSS Protection) ── */
 window.sanitizeText = function (str) {
   if (!str) return '';
@@ -40,7 +60,7 @@ window.resolveUrl = function (url) {
 
   try {
     const isAbsolute = urlStr.includes('://');
-    const base = window.location.origin;
+    const base = window.location.origin + BASE_PREFIX + '/';
     const parsed = new URL(urlStr, base);
     
     let pathname = parsed.pathname;
@@ -336,7 +356,7 @@ function injectNav(activePage) {
   topbar.setAttribute('role', 'banner');
 
   const homeHref = window.resolveUrl(prefix ? `${prefix}/index.html` : 'index.html');
-  const logoSrc = '/images/sap logo only.webp';
+  const logoSrc = window.resolveAssetUrl('/images/sap logo only.webp');
 
   const searchTooltip =
     activePage === 'authors'
@@ -1484,7 +1504,7 @@ document.addEventListener('astro:page-load', () => {
       '@type': 'BookStore',
       name: 'San Anselmo Publications, Inc.',
       url: window.location.origin,
-      logo: window.location.origin + '/images/sap logo only.webp',
+      logo: window.location.origin + window.resolveAssetUrl('/images/sap logo only.webp'),
       description:
         'Browse our complete catalog of Filipino literature, poetry, fiction, and journals.',
       address: {
@@ -1686,7 +1706,7 @@ function injectFooter() {
   footer.innerHTML = `
     <div class="footer-simple-inner">
       <div class="footer-simple-brand">
-        <img src="/images/sap logo only.webp" alt="San Anselmo Publications Logo" class="footer-simple-logo" width="26" height="26" loading="lazy" decoding="async">
+        <img src="${window.resolveAssetUrl('/images/sap logo only.webp')}" alt="San Anselmo Publications Logo" class="footer-simple-logo" width="26" height="26" loading="lazy" decoding="async">
         <span class="footer-simple-title">San Anselmo Publications</span>
       </div>
       
