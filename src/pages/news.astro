@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Mock window for server-side build compatibility
+globalThis.window = globalThis.window || {};
+await import('../data/data.js');
+---
+
+<BaseLayout
+  title="News — San Anselmo Publications, Inc."
+  description="Latest news and announcements from San Anselmo Publications, Inc. Follow us on Facebook."
+  dataPage="news"
+  prefetchHrefs={['index.html']}
+>
+  <div class="page-body">
+    <main class="main-content" id="mainContent" role="main">
+      <section
+        class="content-section active"
+        aria-label="News and Announcements"
+      >
+        <div class="section-inner">
+          <header class="page-header">
+            <h1 class="page-title">
+              News &amp; <span class="accent">Announcements</span>
+            </h1>
+            <p class="page-subtitle">What's happening at San Anselmo</p>
+          </header>
+          <div class="news-container-grid">
+            <div class="news-articles-col" id="newsListCol">
+              <div class="flex-center" style="padding: 4rem 0; width: 100%;">
+                <div class="loading-spinner"></div>
+              </div>
+            </div>
+            <div class="news-fb-col">
+              <div class="news-fb-hero-card">
+                <div class="news-fb-hero-label">
+                  <svg class="icon" aria-hidden="true" focusable="false"
+                    ><use href="#icon-facebook"></use></svg
+                  >
+                  Follow us on Facebook
+                </div>
+                <div class="news-fb-hero-frame">
+                  <!-- Facebook iframe: uses data-src + IntersectionObserver for zero initial load cost -->
+                  <iframe
+                    id="fbEmbed"
+                    data-src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fsananselmopress&tabs=timeline&width=500&height=680&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+                    width="500"
+                    height="680"
+                    class="iframe-clean"
+                    scrolling="no"
+                    frameborder="0"
+                    allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    title="San Anselmo Facebook Page"
+                    loading="lazy"
+                  >
+                  </iframe>
+                </div>
+                <div class="news-fb-hero-footer">
+                  <a
+                    href="https://www.facebook.com/sananselmopress"
+                    target="_blank"
+                    rel="noopener"
+                    class="news-fb-hero-cta"
+                  >
+                    <svg class="icon" aria-hidden="true" focusable="false"
+                      ><use href="#icon-facebook"></use></svg
+                    >
+                    Open Full Page
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

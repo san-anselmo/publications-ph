@@ -1,0 +1,29 @@
+---
+import { BOOKS } from '../../data/data.js';
+
+export function getStaticPaths() {
+  return BOOKS.map((book) => ({
+    params: { id: book.id },
+    props: { book },
+  }));
+}
+
+const { book } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{book.title}</title>
+  </head>
+  <body>
+    <article data-pagefind-body>
+      <h1 data-pagefind-meta="title">{book.title}</h1>
+      <div data-pagefind-meta="author">{book.author || book.editor || ''}</div>
+      <div data-pagefind-meta="category">{book.category}</div>
+      <div data-pagefind-meta="year">{book.year}</div>
+      <p>{book.blurb}</p>
+    </article>
+  </body>
+</html>

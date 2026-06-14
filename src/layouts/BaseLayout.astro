@@ -1,0 +1,102 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description: string;
+  dataPage: string;
+  prefetchHrefs?: string[];
+  preScripts?: string[];
+  postScripts?: string[];
+  ogImage?: string;
+  ogType?: string;
+  lang?: string;
+}
+
+const {
+  title,
+  description,
+  dataPage,
+  prefetchHrefs = [],
+  preScripts = [],
+  postScripts = [],
+  ogImage = '/images/sap logo only.webp',
+  ogType = 'website',
+  lang = Astro.params.lang || 'en',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <ViewTransitions />
+    <script src="/js/theme-init.js?v=2.40.8" is:inline></script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <meta name="theme-color" content="#8C3D1F" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://docs.google.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https: http:; frame-src 'self' https://*.facebook.com https://*.google.com; connect-src 'self' https://docs.google.com https://*.gumroad.com https://sananselmopress.gumroad.com https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com; worker-src 'self' blob:; child-src 'self' blob:;"
+    />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta
+      property="og:image"
+      content={ogImage.startsWith('http')
+        ? ogImage
+        : 'https://sananselmopress.com' + ogImage}
+    />
+    <meta property="og:type" content={ogType} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content={ogImage.startsWith('http')
+        ? ogImage
+        : 'https://sananselmopress.com' + ogImage}
+    />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://docs.google.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://sananselmopress.gumroad.com"
+      crossorigin
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    {prefetchHrefs.map((href) => <link rel="prefetch" href={href} />)}
+    <link rel="stylesheet" href="/css/styles.css?v=2.40.8" />
+    <link rel="manifest" href="/manifest.json?v=2.40.8" />
+    <script src="/js/error-logger.js" defer is:inline></script>
+    <script src="/data/fallback-data.js?v=2.40.8" defer is:inline></script>
+    {preScripts.map((src) => <script src={src} defer is:inline />)}
+    <script src="/js/components.js?v=2.40.8" defer is:inline></script>
+    <script is:inline>
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
+        });
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/sw.js?v=2.40.8', { scope: '/' })
+            .then((reg) => console.log('Service Worker registered', reg))
+            .catch((err) => console.error('Service Worker registration failed', err));
+        });
+      }
+    </script>
+    {postScripts.map((src) => <script src={src} defer is:inline />)}
+  </head>
+  <body data-page={dataPage} data-lang={lang}>
+    <div id="navContainer"></div>
+    <slot />
+  </body>
+</html>

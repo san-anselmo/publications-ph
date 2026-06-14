@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact Us — San Anselmo Publications, Inc."
+  description="Get in touch with San Anselmo Publications, Inc. Office address, social media, phone, and map."
+  dataPage="contact"
+  prefetchHrefs={['index.html']}
+>
+  <div class="page-body">
+    <main class="main-content" id="mainContent" role="main">
+      <section class="content-section active" aria-label="Contact Information">
+        <div class="section-inner">
+          <header class="page-header">
+            <h1 class="page-title">Contact <span class="accent">Us</span></h1>
+            <p class="page-subtitle">We'd love to hear from you</p>
+          </header>
+          <div class="contacts-grid">
+            <div class="contacts-left">
+              <div class="contact-card">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                  <svg class="icon" aria-hidden="true" focusable="false"
+                    ><use href="#icon-pin"></use></svg
+                  >
+                </div>
+                <div>
+                  <div class="contact-name">San Anselmo Publications, Inc.</div>
+                  <div class="contact-role">
+                    Room 301 GRACE Building, Ortigas Avenue, Greenhills, San
+                    Juan City
+                  </div>
+                  <div class="contact-links">
+                    <a
+                      href="https://www.facebook.com/sananselmopress"
+                      target="_blank"
+                      rel="noopener"
+                      class="contact-link"
+                    >
+                      <svg class="icon" aria-hidden="true" focusable="false"
+                        ><use href="#icon-facebook"></use></svg
+                      >
+                      facebook.com/sananselmopress
+                    </a>
+                    <a
+                      href="https://www.instagram.com/leondepola/"
+                      target="_blank"
+                      rel="noopener"
+                      class="contact-link"
+                    >
+                      <svg class="icon" aria-hidden="true" focusable="false"
+                        ><use href="#icon-instagram"></use></svg
+                      >
+                      instagram.com/leondepola
+                    </a>
+                    <a href="tel:+639209236509" class="contact-link">
+                      <svg class="icon" aria-hidden="true" focusable="false"
+                        ><use href="#icon-phone"></use></svg
+                      >
+                      0920 923 6509
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-card">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                  <svg class="icon" aria-hidden="true" focusable="false"
+                    ><use href="#icon-mail"></use></svg
+                  >
+                </div>
+                <div>
+                  <div class="contact-name contact-name-pr">
+                    Gay Ace Domingo
+                  </div>
+                  <div class="contact-role">
+                    Marketing and Public Relations Head · San Anselmo
+                    Publications, Inc.
+                  </div>
+                  <div class="contact-links">
+                    <a
+                      href="mailto:pr.sananselmo@gmail.com"
+                      class="contact-link"
+                      ><svg class="icon" aria-hidden="true" focusable="false"
+                        ><use href="#icon-mail"></use></svg
+                      >pr.sananselmo@gmail.com</a
+                    >
+                    <a href="tel:+639175413010" class="contact-link">
+                      <svg class="icon" aria-hidden="true" focusable="false"
+                        ><use href="#icon-phone"></use></svg
+                      >
+                      0917 541 3010
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="contacts-right">
+              <div class="contacts-map-wrap">
+                <link
+                  rel="stylesheet"
+                  href="https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.css"
+                />
+                <script
+                  is:inline
+                  src="https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.js"
+                ></script>
+                <div id="map" class="contacts-map-canvas"></div>
+                <script is:inline src="/js/map-init.js?v=2.40.8"></script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="js/theme-init.js?v=1.0.66"></script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <meta name="theme-color" content="#8C3D1F" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://docs.google.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:; iframe-src 'self' https://*.facebook.com https://*.google.com; connect-src 'self' https://docs.google.com https://*.gumroad.com https://sananselmopress.gumroad.com;"
+    />
+    <meta
+      name="description"
+      content="San Anselmo Publications, Inc. — Browse our complete catalog of Filipino literature, poetry, fiction, and journals. Preserving the Filipino intellect."
+    />
+    <title>San Anselmo Publications — Catalog</title>
+    <link rel="preconnect" href="https://docs.google.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://sananselmopress.gumroad.com"
+      crossorigin
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="prefetch" href="about.html" />
+    <link rel="prefetch" href="order.html" />
+    <link rel="prefetch" href="contact.html" />
+    <link rel="stylesheet" href="css/styles.css?v=1.0.66" />
+    <link rel="manifest" href="manifest.json?v=1.0.66" />
+    <script src="js/error-logger.js" defer></script>
+    <script src="data/fallback-data.js?v=1.0.66" defer></script>
+    <script src="js/sheets-cms.js?v=1.0.66" defer></script>
+    <script src="js/components.js?v=1.0.66" defer></script>
+    <script src="js/catalog.js?v=1.0.66" defer></script>
+  </head>
+  <body data-page="catalog">
+    <div id="navContainer"></div>
+
+    <div class="page-body">
+      <main class="main-content" id="mainContent" role="main">
+        <section class="content-section active" aria-label="Book Catalog">
+          <div class="section-inner">
+            <header class="page-header">
+              <div class="page-eyebrow">Catalog as of June 2026</div>
+              <h1 class="page-title">
+                Our <span class="accent">Publications</span>
+              </h1>
+              <p class="page-subtitle">
+                Philippine literature, arts &amp; socio-political thought
+              </p>
+            </header>
+            <div
+              class="filter-bar"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+              "
+            >
+              <div
+                style="display: flex; align-items: center; gap: 0.5rem; flex: 1"
+              >
+                <span class="filter-label">Genre</span>
+                <div
+                  class="genre-tags"
+                  id="genreCloud"
+                  role="group"
+                  aria-label="Filter by genre"
+                ></div>
+                <div class="genre-mobile-dropdown cs-wrap">
+                  <button class="cs-btn" id="genreBtn" aria-expanded="false">
+                    <span id="genreLabel">All Genres</span>
+                    <svg class="icon" aria-hidden="true" focusable="false">
+                      <use href="#icon-chevron"></use>
+                    </svg>
+                  </button>
+                  <div class="cs-opts" id="genreOpts" role="listbox"></div>
+                </div>
+              </div>
+            </div>
+            <div
+              id="catalogGrid"
+              role="list"
+              aria-label="Book catalog"
+              aria-live="polite"
+            >
+              <div class="flex-center" style="padding: 4rem 0; width: 100%">
+                <div class="loading-spinner"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Book Detail Modal -->
+    <dialog class="modal-overlay" id="detailModal" aria-labelledby="mTitle">
+      <article class="modal-card">
+        <div class="modal-close">
+          <button
+            class="modal-close-btn"
+            id="detailModalCloseBtn"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="det-eyebrow" id="mCategory"></div>
+          <div class="bk-det-grid">
+            <div>
+              <picture class="det-cover-picture">
+                <source id="mCoverWebp" srcset="" type="image/webp" />
+                <img
+                  id="mCover"
+                  src=""
+                  alt="Book cover"
+                  class="det-cover"
+                  width="170"
+                  height="255"
+                />
+              </picture>
+              <div class="det-cover-ph hidden" aria-hidden="true">
+                <svg
+                  class="icon det-ph-icon"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <use href="#icon-book"></use>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <div class="det-title-row">
+                <h2 class="det-title" id="mTitle"></h2>
+                <div class="det-title-actions">
+                  <button
+                    id="mSpeakBtn"
+                    class="det-action-icon-btn"
+                    aria-label="Listen to book description"
+                    data-tooltip="Listen"
+                  >
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    id="mShareBtn"
+                    class="det-action-icon-btn btn-share-modal"
+                    aria-label="Share this book"
+                    data-tooltip="Share"
+                  >
+                    <svg class="icon" aria-hidden="true" focusable="false">
+                      <use href="#icon-share"></use>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="det-author" id="mAuthor"></div>
+              <div class="det-meta-grid">
+                <div>
+                  <div class="det-meta-label">Stocks</div>
+                  <div id="mStock"></div>
+                </div>
+                <div>
+                  <div class="det-meta-label">Year</div>
+                  <div class="det-meta-value" id="mYear"></div>
+                </div>
+                <div id="mIsbnWrap">
+                  <div class="det-meta-label">ISBN / ISSN</div>
+                  <div class="det-meta-value" id="mISBN"></div>
+                </div>
+                <div>
+                  <div class="det-meta-label">Language</div>
+                  <div class="det-meta-value" id="mLang"></div>
+                </div>
+              </div>
+              <p class="det-desc" id="mBlurb"></p>
+              <div class="det-action-row">
+                <div>
+                  <div class="det-price-label">Price</div>
+                  <div class="det-price-value" id="mPrice"></div>
+                </div>
+                <div class="det-buttons-wrap">
+                  <a
+                    id="mGumroadBtn"
+                    href="#"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-digital hidden"
+                  >
+                    <svg class="icon" aria-hidden="true" focusable="false">
+                      <use href="#icon-book"></use>
+                    </svg>
+                    Buy Digital Edition
+                  </a>
+                  <button id="mAddToCartBtn" class="btn-primary">
+                    <svg class="icon" aria-hidden="true" focusable="false">
+                      <use href="#icon-cart"></use>
+                    </svg>
+                    Add to Cart
+                  </button>
+                  <a
+                    href="https://m.me/sananselmopress"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-outline"
+                  >
+                    <svg class="icon" aria-hidden="true" focusable="false">
+                      <use href="#icon-chat"></use>
+                    </svg>
+                    Order Now
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </dialog>
+
+    <!-- Author Modal -->
+    <dialog class="modal-overlay" id="authorModal" aria-labelledby="amName">
+      <article class="modal-card">
+        <div class="modal-close">
+          <button
+            class="modal-close-btn"
+            id="authorModalCloseBtn"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="am-header">
+            <div class="am-avatar" id="amAvatar" aria-hidden="true"></div>
+            <div>
+              <div class="am-name" id="amName"></div>
+              <div class="am-bio" id="amBio"></div>
+            </div>
+          </div>
+          <div class="det-meta-label am-pub-title">Publications</div>
+          <div class="am-books" id="amBooks" role="list"></div>
+        </div>
+      </article>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,260 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+// Mock window for server-side build compatibility
+globalThis.window = globalThis.window || {};
+const { BOOKS } = await import('../data/data.js');
+
+const { lang = Astro.params.lang || 'en' } = Astro.props;
+const isFil = lang === 'fil';
+
+// Sort books by year descending, then title ascending
+const sortedBooks = [...BOOKS].sort((a, b) => {
+  if (b.year !== a.year) {
+    return b.year - a.year;
+  }
+  return a.title.localeCompare(b.title);
+});
+
+// Group books by year
+const booksByYear = sortedBooks.reduce((acc, book) => {
+  const y = book.year || 2026;
+  if (!acc[y]) acc[y] = [];
+  acc[y].push(book);
+  return acc;
+}, {});
+
+const years = Object.keys(booksByYear).sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title={isFil
+    ? 'Timeline ng Lathalain — San Anselmo Publications, Inc.'
+    : 'Publications Timeline — San Anselmo Publications, Inc.'}
+  description={isFil
+    ? 'Tingnan ang makasaysayang pagkakasunud-sunod ng mga aklat at journal na inilathala ng San Anselmo Publications.'
+    : 'View the chronological history of books and journals published by San Anselmo Publications.'}
+  dataPage="timeline"
+>
+  <div class="page-body">
+    <main class="main-content" id="mainContent" role="main">
+      <section
+        class="content-section active"
+        aria-label="Publications Timeline"
+      >
+        <div class="section-inner">
+          <header class="page-header">
+            <div class="page-eyebrow">
+              {isFil ? 'Kasaysayan ng aming Palimbagan' : 'Our Press History'}
+            </div>
+            <h1 class="page-title">
+              {isFil ? 'Timeline ng' : 'Publications'}
+              <span class="accent">{isFil ? 'Lathalain' : 'Timeline'}</span>
+            </h1>
+            <p class="page-subtitle">
+              {
+                isFil
+                  ? 'Kronolohikal na paglalakbay sa aming mga inilathalang akda'
+                  : 'A chronological journey through our published works'
+              }
+            </p>
+          </header>
+
+          <div class="timeline-container">
+            {
+              years.map((year) => (
+                <div class="timeline-year-group">
+                  <div class="timeline-year-header">
+                    <div class="timeline-line" />
+                    <span class="timeline-year-badge">{year}</span>
+                  </div>
+                  <div class="timeline-year-content">
+                    <div class="timeline-books-grid">
+                      {booksByYear[year].map((book) => (
+                        <div class="timeline-book-card">
+                          <div class="timeline-book-cover-wrap">
+                            <Image
+                              src={
+                                book.img.startsWith('/')
+                                  ? book.img
+                                  : '/' + book.img
+                              }
+                              alt={book.title}
+                              class="timeline-book-cover"
+                              width={120}
+                              height={180}
+                              loading="lazy"
+                            />
+                          </div>
+                          <div class="timeline-book-details">
+                            <span class="timeline-book-category">
+                              {book.category}
+                            </span>
+                            <h3 class="timeline-book-title">{book.title}</h3>
+                            <p class="timeline-book-author">
+                              {book.author ||
+                                book.editor ||
+                                (isFil
+                                  ? "Iba't ibang manunulat"
+                                  : 'Various writers')}
+                            </p>
+                            <p class="timeline-book-blurb">{book.blurb}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .timeline-container {
+    position: relative;
+    padding: 2rem 0;
+    margin-top: 2rem;
+  }
+  .timeline-year-group {
+    margin-bottom: 4rem;
+  }
+  .timeline-year-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .timeline-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--ash);
+    z-index: 1;
+  }
+  .timeline-year-badge {
+    position: relative;
+    z-index: 2;
+    background: var(--terra);
+    color: #fff;
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.4rem 1.2rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow-sm);
+  }
+  body.dark .timeline-year-badge {
+    background: var(--amber);
+    color: #111;
+  }
+  .timeline-year-content {
+    padding-left: 1rem;
+  }
+  .timeline-books-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap-lg);
+  }
+  @media (max-width: 900px) {
+    .timeline-books-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .timeline-book-card {
+    display: flex;
+    gap: 1.5rem;
+    background: var(--ivory);
+    border: 1px solid var(--ash);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  body.dark .timeline-book-card {
+    background: #252321;
+    border-color: #3d3a36;
+  }
+  .timeline-book-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .timeline-book-cover-wrap {
+    flex-shrink: 0;
+    width: 100px;
+    height: 150px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: var(--cream);
+  }
+  .timeline-book-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .timeline-book-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .timeline-book-category {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 600;
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    color: var(--sepia);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  body.dark .timeline-book-category {
+    color: var(--gold);
+  }
+  .timeline-book-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-book-author {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: var(--fs-sm);
+    color: var(--charcoal);
+    margin-bottom: 0.8rem;
+  }
+  .timeline-book-blurb {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--charcoal);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  @media (max-width: 500px) {
+    .timeline-book-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+    .timeline-book-cover-wrap {
+      width: 120px;
+      height: 180px;
+    }
+    .timeline-book-blurb {
+      -webkit-line-clamp: 3;
+    }
+  }
+</style>

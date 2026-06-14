@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Mock window for server-side build compatibility
+globalThis.window = globalThis.window || {};
+await import('../data/data.js');
+---
+
+<BaseLayout
+  title="Events — San Anselmo Publications, Inc."
+  description="Upcoming and past events from San Anselmo Publications — book fairs, launches, signings, and outreach."
+  dataPage="events"
+  prefetchHrefs={['index.html']}
+  preScripts={['/js/sheets-cms.js?v=2.40.8']}
+  postScripts={['/js/events.js?v=2.40.8']}
+>
+  <div class="page-body">
+    <main class="main-content" id="mainContent" role="main">
+      <section
+        class="content-section active"
+        aria-label="Events and Appearances"
+      >
+        <div class="section-inner">
+          <header class="page-header">
+            <h1 class="page-title">
+              Events &amp; <span class="accent">Appearances</span>
+            </h1>
+            <p class="page-subtitle">Book fairs, launches, and outreach</p>
+          </header>
+          <div class="events-layout-container" id="eventsLayoutContainer">
+            <div id="singleEventView" class="hidden"></div>
+            <div id="eventsGridWrapper">
+              <div
+                class="events-filter-row"
+                role="group"
+                aria-label="Event filters"
+              >
+                <span class="events-filter-lbl">When</span>
+                <button class="evt-filter-btn active" id="efUpcoming"
+                  >Upcoming</button
+                >
+                <button class="evt-filter-btn" id="efPast">Past</button>
+                <button class="evt-filter-btn" id="efAll">All</button>
+                <div class="events-divider" aria-hidden="true"></div>
+                <span class="events-filter-lbl">Type</span>
+                <div class="cs-wrap evt-type-wrap">
+                  <button class="cs-btn" id="evtTypeBtn" aria-expanded="false">
+                    <span id="evtTypeLabel">All</span>
+                    <svg class="icon" aria-hidden="true" focusable="false"
+                      ><use href="#icon-chevron"></use></svg
+                    >
+                  </button>
+                  <div class="cs-opts" id="evtTypeOpts" role="listbox"></div>
+                </div>
+              </div>
+              <div class="events-list" id="eventsList" role="list">
+                <div class="flex-center" style="padding: 4rem 0; width: 100%;">
+                  <div class="loading-spinner"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

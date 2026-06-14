@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+const { lang = Astro.params.lang || 'en' } = Astro.props;
+const isFil = lang === 'fil';
+---
+
+<BaseLayout
+  title={isFil
+    ? 'Tungkol sa Amin — San Anselmo Publications, Inc.'
+    : 'About Us — San Anselmo Publications, Inc.'}
+  description={isFil
+    ? 'Alamin ang tungkol sa San Anselmo Publications, Inc. — isang malayang bahay-lathala na nangangalaga sa talinong Pilipino sa pamamagitan ng panitikan.'
+    : 'Learn about San Anselmo Publications, Inc. — an independent Filipino publishing house preserving the Filipino intellect through literature.'}
+  dataPage="about"
+  prefetchHrefs={['index.html']}
+>
+  <div class="page-body">
+    <main class="main-content" id="mainContent" role="main">
+      <section
+        class="content-section active"
+        aria-label={isFil
+          ? 'Tungkol sa San Anselmo Publications'
+          : 'About San Anselmo Publications'}
+      >
+        <div class="section-inner">
+          <header class="page-header">
+            <h1 class="page-title">
+              {isFil ? 'Tungkol sa' : 'About'}
+              <span class="accent">{isFil ? 'Amin' : 'Us'}</span>
+            </h1>
+          </header>
+          <div class="about-masthead">
+            <div class="about-masthead-text">
+              <h2>
+                {isFil ? 'Pangangalaga sa' : 'Preserving the'}
+                <em>{isFil ? 'Talinong Pilipino' : 'Filipino Intellect'}</em>
+              </h2>
+              <p>
+                <strong>San Anselmo Publications, Inc.</strong>
+                {
+                  isFil
+                    ? 'ay isang independyenteng tagapaglathala ng mga aklat, journal, polyeto, at audiobook na nakabase sa Pilipinas. Kilala kami sa aming pagtuon sa lokal na panitikan, sining, at mga temang sosyo-pulitikal.'
+                    : 'is a Philippine-based independent publisher of books, journals, pamphlets, and audiobooks. We are known for our focus on local literature, arts, and socio-political themes.'
+                }
+              </p>
+              <p>
+                {
+                  isFil
+                    ? 'Aktibo kaming lumalahok sa mga book fair at nakikipagtulungan sa mga institusyong akademiko upang itaguyod ang kritikal na pag-iisip at pagpapahalaga sa kultura sa buong bansa.'
+                    : 'We actively participate in book fairs and collaborate with academic institutions to promote critical thinking and cultural appreciation across the nation.'
+                }
+              </p>
+              <div class="about-award">
+                <svg class="icon" aria-hidden="true" focusable="false"
+                  ><use href="#icon-star"></use></svg
+                >
+                {
+                  isFil
+                    ? 'Nagwagi ng Gintong Aklat 2023 Award'
+                    : 'Gintong Aklat 2023 Awardee'
+                }
+              </div>
+            </div>
+            <div class="about-masthead-logo">
+              <Image
+                src="/images/San Anselmo Press logo.webp"
+                class="about-logo-img"
+                alt="San Anselmo Publications Logo"
+                width={260}
+                height={260}
+                loading="lazy"
+              />
+              <div class="logo-fallback-lg hidden" aria-hidden="true">S</div>
+            </div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-num">48</div><div class="stat-lbl">
+                {isFil ? 'Mga Pamagat' : 'Titles'}
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">14</div><div class="stat-lbl">
+                {isFil ? 'Mga Isyu ng Santelmo' : 'Santelmo Issues'}
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">2022</div><div class="stat-lbl">
+                {isFil ? 'Itinatag' : 'Founded'}
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">2</div><div class="stat-lbl">
+                {isFil ? 'Pambansang Alagad ng Sining' : 'National Artists'}
+              </div>
+            </div>
+          </div>
+          <div class="about-section">
+            <h3>{isFil ? 'Ang Ating Misyon' : 'Our Mission'}</h3>
+            <p>
+              {
+                isFil
+                  ? 'Naniniwala kami na ang malayang paglalathala ay isang gawaing pangkultura. Sa pagbibigay-boses sa mga manunulat, makata, at alagad ng sining na Pilipino, layunin naming idokumento ang ating kolektibong kasaysayan at hubugin ang isang mas mapagnilay-nilay na lipunan.'
+                  : 'We believe that independent publishing is an act of cultural stewardship. By giving voice to Filipino writers, poets, and artists, we aim to document our collective history and shape a more reflective society.'
+              }
+            </p>
+          </div>
+          <div class="about-section">
+            <h3>
+              {
+                isFil
+                  ? 'Santelmo: Liwanag sa Dilim'
+                  : 'Santelmo: Liwanag sa Dilim'
+              }
+            </h3>
+            <p>
+              {
+                isFil
+                  ? 'Ang aming pangunahing journal sa panitikan, na inilalathala quarterly, ay nagsisilbing isang mahalagang plataporma para sa malikhaing pagpapahayag. Ipinangalan sa maalamat na apoy ni Santelmo, sumisimbolo ito ng liwanag, katatagan, at ng nagpapatuloy na ningas ng diwang Pilipino.'
+                  : "Our flagship literary journal, published quarterly, serves as a vital platform for creative expression. Named after the legendary St. Elmo's fire, it symbolizes illumination, resilience, and the enduring flame of the Filipino spirit."
+              }
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

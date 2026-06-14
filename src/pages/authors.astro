@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Mock window for server-side build compatibility
+globalThis.window = globalThis.window || {};
+await import('../data/data.js');
+---
+
+<BaseLayout
+  title="Authors — San Anselmo Publications, Inc."
+  description="Meet the writers whose work San Anselmo Publications is honored to publish."
+  dataPage="authors"
+  prefetchHrefs={['index.html']}
+  preScripts={['/js/sheets-cms.js?v=2.40.8']}
+  postScripts={['/js/authors.js?v=2.40.8']}
+>
+  <div class="page-body">
+    <main class="main-content" id="mainContent" role="main">
+      <section class="content-section active" aria-label="Authors">
+        <div class="section-inner">
+          <header class="page-header">
+            <h1 class="page-title">Our <span class="accent">Authors</span></h1>
+            <p class="page-subtitle">
+              Writers whose work we are honored to publish
+            </p>
+          </header>
+          <div
+            class="author-index-bar"
+            id="authorIndexBar"
+            role="navigation"
+            aria-label="Author alphabetical index"
+          >
+          </div>
+          <div class="author-grid" id="authorGrid" role="list">
+            <!-- Shimmering author skeletons (precisely mirroring actual layout) -->
+            <div
+              class="author-card skeleton"
+              aria-hidden="true"
+              style="pointer-events: none;"
+            >
+              <div
+                class="author-card-avatar skeleton-shimmer"
+                style="border: none; box-shadow: none;"
+              >
+              </div>
+              <div class="author-card-details">
+                <div class="author-card-name">
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 16px; width: 140px; border-radius: 3px; display: block;"
+                  ></span>
+                </div>
+                <div class="author-card-bio">
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 12px; width: 100%; border-radius: 2px; margin-bottom: 0.3rem; display: block;"
+                  ></span>
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 12px; width: 80%; border-radius: 2px; display: block;"
+                  ></span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="author-card skeleton"
+              aria-hidden="true"
+              style="pointer-events: none;"
+            >
+              <div
+                class="author-card-avatar skeleton-shimmer"
+                style="border: none; box-shadow: none;"
+              >
+              </div>
+              <div class="author-card-details">
+                <div class="author-card-name">
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 16px; width: 140px; border-radius: 3px; display: block;"
+                  ></span>
+                </div>
+                <div class="author-card-bio">
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 12px; width: 100%; border-radius: 2px; margin-bottom: 0.3rem; display: block;"
+                  ></span>
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 12px; width: 80%; border-radius: 2px; display: block;"
+                  ></span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="author-card skeleton"
+              aria-hidden="true"
+              style="pointer-events: none;"
+            >
+              <div
+                class="author-card-avatar skeleton-shimmer"
+                style="border: none; box-shadow: none;"
+              >
+              </div>
+              <div class="author-card-details">
+                <div class="author-card-name">
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 16px; width: 140px; border-radius: 3px; display: block;"
+                  ></span>
+                </div>
+                <div class="author-card-bio">
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 12px; width: 100%; border-radius: 2px; margin-bottom: 0.3rem; display: block;"
+                  ></span>
+                  <span
+                    class="skeleton-shimmer"
+                    style="height: 12px; width: 80%; border-radius: 2px; display: block;"
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Author Modal -->
+  <dialog class="modal-overlay" id="authorModal" aria-labelledby="amName">
+    <article class="modal-card">
+      <div class="modal-close">
+        <button
+          class="modal-close-btn"
+          id="authorModalCloseBtn"
+          aria-label="Close">×</button
+        >
+      </div>
+      <div class="modal-body">
+        <div class="am-header">
+          <div class="am-avatar" id="amAvatar" aria-hidden="true"></div>
+          <div>
+            <div class="am-name" id="amName"></div><div
+              class="am-bio"
+              id="amBio"
+            >
+            </div>
+          </div>
+        </div>
+        <div class="det-meta-label am-pub-title">Publications</div>
+        <div class="am-books" id="amBooks" role="list"></div>
+      </div>
+    </article>
+  </dialog>
+</BaseLayout>

@@ -1,0 +1,71 @@
+backend:
+  name: github
+  repo: san-anselmo/publications
+  branch: main
+  open_authoring: true
+
+media_folder: 'public/images'
+public_folder: '/images'
+
+collections:
+  - name: 'books'
+    label: 'Books'
+    folder: 'src/content/books'
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: 'ID', name: 'id', widget: 'string' }
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - {
+          label: 'Author/Editor',
+          name: 'author',
+          widget: 'string',
+          required: false,
+        }
+      - {
+          label: 'Editor (Optional)',
+          name: 'editor',
+          widget: 'string',
+          required: false,
+        }
+      - {
+          label: 'Category',
+          name: 'category',
+          widget: 'select',
+          options:
+            [
+              'Journal',
+              'Poetry',
+              'Fiction',
+              'Non-Fiction',
+              'Biography',
+              'Inspirational',
+              'Anthology',
+              "Children's Literature",
+              'General Reference',
+            ],
+        }
+      - { label: 'Year', name: 'year', widget: 'number', value_type: 'int' }
+      - { label: 'Price', name: 'price', widget: 'number', value_type: 'int' }
+      - { label: 'Stock status', name: 'stock', widget: 'number', default: -1 }
+      - { label: 'ISBN/ISSN', name: 'isbn', widget: 'string', required: false }
+      - {
+          label: 'Language',
+          name: 'lang',
+          widget: 'string',
+          default: 'English',
+        }
+      - { label: 'Cover Image', name: 'img', widget: 'image' }
+      - { label: 'Blurb', name: 'blurb', widget: 'text' }
+      - {
+          label: 'Gumroad Link (Optional)',
+          name: 'gumroad',
+          widget: 'string',
+          required: false,
+        }
+      - {
+          label: 'Note (Optional)',
+          name: 'note',
+          widget: 'string',
+          required: false,
+        }

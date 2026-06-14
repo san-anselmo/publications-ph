@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Mock window for server-side build compatibility
+globalThis.window = globalThis.window || {};
+await import('../data/data.js');
+---
+
+<BaseLayout
+  title="Our Team — San Anselmo Publications, Inc."
+  description="Meet the editors, designers, and advocates behind San Anselmo Publications, Inc."
+  dataPage="team"
+  prefetchHrefs={['index.html']}
+  preScripts={['/js/sheets-cms.js?v=2.40.8']}
+>
+  <div class="page-body">
+    <main class="main-content" id="mainContent" role="main">
+      <section class="content-section active" aria-label="Our Team">
+        <div class="section-inner">
+          <header class="page-header">
+            <h1 class="page-title">Our <span class="accent">Team</span></h1>
+            <p class="page-subtitle">
+              The editors, designers, and advocates behind every title
+            </p>
+          </header>
+          <div class="team-grid" id="teamGrid" role="list">
+            <div
+              class="flex-center"
+              style="grid-column: 1 / -1; padding: 4rem 0;"
+            >
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

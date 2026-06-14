@@ -1,0 +1,86 @@
+import js from '@eslint/js';
+import eslintPluginAstro from 'eslint-plugin-astro';
+import * as astroParser from 'astro-eslint-parser';
+import * as tsParser from '@typescript-eslint/parser';
+
+export default [
+  {
+    ignores: [
+      'public/**',
+      'dist/**',
+      'node_modules/**',
+      'scratch/**',
+      '.astro/**',
+    ],
+  },
+  js.configs.recommended,
+  ...eslintPluginAstro.configs.recommended,
+  {
+    files: ['**/*.astro'],
+    languageOptions: {
+      parser: astroParser,
+      parserOptions: {
+        parser: tsParser,
+        extraFileExtensions: ['.astro'],
+      },
+    },
+  },
+  {
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        fetch: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        navigator: 'readonly',
+        AbortSignal: 'readonly',
+        globalThis: 'readonly',
+        location: 'readonly',
+        history: 'readonly',
+        customElements: 'readonly',
+        HTMLElement: 'readonly',
+        confirm: 'readonly',
+        SpeechSynthesisUtterance: 'readonly',
+        URLSearchParams: 'readonly',
+        URL: 'readonly',
+        Blob: 'readonly',
+        self: 'readonly',
+        importScripts: 'readonly',
+        caches: 'readonly',
+        workbox: 'readonly',
+        MutationObserver: 'readonly',
+        IntersectionObserver: 'readonly',
+        maplibregl: 'readonly',
+        PrefsSync: 'readonly',
+        SheetsCMS: 'readonly',
+        BOOKS: 'readonly',
+        AUTHORS: 'readonly',
+        EVENTS: 'readonly',
+        NEWS: 'readonly',
+        btoa: 'readonly',
+        Event: 'readonly',
+        indexedDB: 'readonly',
+        TEAM: 'readonly',
+      },
+    },
+    rules: {
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
+      'no-empty': 'off',
+      'no-inner-declarations': 'off',
+      'no-prototype-builtins': 'off',
+      'no-useless-escape': 'off',
+      'no-useless-assignment': 'off',
+      'no-redeclare': 'off',
+      'no-sparse-arrays': 'off',
+      'preserve-caught-error': 'off',
+      'astro/no-deprecated-getentry': 'off',
+    },
+  },
+];
