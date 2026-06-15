@@ -662,7 +662,7 @@ const BOOKS = [
     lang: 'English & Filipino',
     img: 'images/Santelmo Issue 14.webp',
     issueNum: 14,
-    blurb: '[Blurb here.]',
+    blurb: '[Blurb to follow.]',
   },
   {
     id: 'b48',
@@ -675,7 +675,7 @@ const BOOKS = [
     isbn: '',
     lang: 'English & Filipino',
     img: 'images/Happy.webp',
-    blurb: '[Blurb here.]',
+    blurb: '[Blurb to follow.]',
   },
   {
     id: 'b49',
@@ -688,7 +688,7 @@ const BOOKS = [
     isbn: '',
     lang: 'English & Filipino',
     img: 'images/Farewells.webp',
-    blurb: '[Blurb here.]',
+    blurb: '[Blurb to follow.]',
   },
   {
     id: 'b50',
@@ -715,7 +715,7 @@ const BOOKS = [
     isbn: '',
     lang: 'Filipino',
     img: 'images/Buhay at Banyuhay.webp',
-    blurb: '[Blurb here.]',
+    blurb: '[Blurb to follow.]',
   },
 ];
 
@@ -726,7 +726,7 @@ const AUTHORS = [
     img: 'images/rio alma.webp',
   },
   {
-    name: 'Ed Garcia',
+    name: 'Edmundo "Ed" Garcia',
     bio: 'Constitutional framer, professor, and prolific author.',
     img: 'images/ed garcia.webp',
   },
@@ -746,7 +746,7 @@ const AUTHORS = [
     img: 'images/che sarigumba.webp',
   },
   {
-    name: 'Krip Yuson',
+    name: 'Alfred "Krip" Yuson',
     bio: 'Noted author and poet, also known as Krip Yuson.',
     img: 'images/krip yuson.webp',
   },
